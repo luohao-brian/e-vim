@@ -225,6 +225,12 @@ call plug#end()
     let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
     "close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    " open a NERDTree when vim starts up if no files were specified?
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    " open NERDTree when vim starts up on opening a directory
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
     " s/v 分屏打开文件
     let g:NERDTreeMapOpenSplit = 's'
     let g:NERDTreeMapOpenVSplit = 'v'
@@ -344,3 +350,9 @@ nnoremap <S-Left> :tabprevious<CR>
 nnoremap <S-Right> :tabnext<CR>
 nnoremap <C-n> :tabnew<CR>
 nnoremap <C-x> :tabclose<CR>
+
+" 分屏窗口调整大小
+nmap    w=  :resize +3<CR>
+nmap    w-  :resize -3<CR>
+nmap    w,  :vertical resize -3<CR>
+nmap    w.  :vertical resize +3<CR>
