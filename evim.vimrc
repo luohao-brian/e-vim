@@ -7,7 +7,6 @@ syntax on
 set backspace=indent,eol,start
 set history=2000
 set nocompatible
-set noswapfile
 filetype on
 filetype plugin on
 filetype indent on
@@ -17,7 +16,6 @@ set nobackup
 set novisualbell
 set noerrorbells
 set ruler
-set nowrap
 set showcmd
 set showmode
 set showmatch
@@ -116,8 +114,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'hdima/python-syntax'
     Plug 'hynek/vim-python-pep8-indent'
     Plug 'Glench/Vim-Jinja2-Syntax'
+    " Javascript
+    Plug 'othree/yajs.vim' | Plug 'pangloss/vim-javascript'
     " Json
     Plug 'elzr/vim-json', {'for': 'json'}
+    " CSS
+    Plug 'groenewege/vim-less'
     " Markdown
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
 call plug#end()
@@ -153,6 +155,28 @@ call plug#end()
     let g:go_fmt_command = "goimports"
     let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
+" }}}
+
+" pythonsyntax {{{
+     let python_highlight_all = 1
+" }}}
+
+" markdown {{{
+    let g:vim_markdown_folding_disabled=1
+" }}}
+
+" javascript {{{
+    " pangloss/vim-javascript
+    let g:html_indent_inctags = "html,body,head,tbody"
+    let g:html_indent_script1 = "inc"
+    let g:html_indent_style1 = "inc"
+" }}}
+
+" json {{{
+    let g:vim_json_syntax_conceal = 0
+" }}}
+
+" css {{{
 " }}}
 
 " solarized {{{
