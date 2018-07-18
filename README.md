@@ -2,7 +2,7 @@
 
 我平时一般用css/js/html做前端开发，go/python做后端开发，c/c++做系统开发，git做SCM工具，所以我参考[k-vim](https://github.com/wklken/k-vim)等项目做了一个简单的vim定制。
 
-#### 重载的默认快捷键
+### 重载的默认快捷键
 
 #### 标签页
 ```
@@ -11,14 +11,45 @@ nnoremap <S-Right> :tabnext<CR>
 nnoremap <C-n> :tabnew<CR>
 nnoremap <C-x> :tabclose<CR>
 ```
+
 #### 分屏窗口调整大小
-nmap`
 ```
 nmap    w=  :resize +3<CR>
 nmap    w-  :resize -3<CR>
 nmap    w,  :vertical resize -3<CR>
 nmap    w.  :vertical resize +3<CR>
 ```
+
+#### 分屏窗口快捷键
+```
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-K> <C-W><C-K>
+```
+
+#### 开启左边栏的树形文件列表
+
+```
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+```
+
+#### 开启右边栏符号列表
+```
+nmap <Leader>t :TagbarToggle<CR>
+```
+
+#### 开启git diff显示
+```
+nnoremap <leader>gs :GitGutterToggle<CR>
+```
+
+#### 清除多余空格
+
+```
+map <leader><space> :FixWhitespace<cr>
+```
+
 ### 依赖
 
 #### Mac OS

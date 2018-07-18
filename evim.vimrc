@@ -356,3 +356,10 @@ nmap    w=  :resize +3<CR>
 nmap    w-  :resize -3<CR>
 nmap    w,  :vertical resize -3<CR>
 nmap    w.  :vertical resize +3<CR>
+
+" 分屏窗口快捷键
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-K> <C-W><C-K>
+
