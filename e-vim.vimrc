@@ -61,9 +61,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-    "Airline
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    " lightline
+    Plug 'itchyny/lightline.vim'
     " rainbow_parentheses
     " 括号显示增强
     Plug 'kien/rainbow_parentheses.vim'
@@ -95,10 +94,6 @@ call plug#begin('~/.vim/plugged')
     " tagbar
     Plug 'majutsushi/tagbar'
 
-    " gundo
-    " edit history, 可以查看回到某个历史状态
-    Plug 'sjl/gundo.vim'
-
     "全局搜索，support by the_silver_searcher
     Plug 'mileszs/ack.vim'
 
@@ -121,25 +116,26 @@ call plug#begin('~/.vim/plugged')
     Plug 'groenewege/vim-less'
     " Markdown
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
+    " Nginx
+    Plug 'chr4/nginx.vim'
 call plug#end()
 
-" airline {{{
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
+" lightline {{{
+    set laststatus=2
+    if !has('gui_running')
+        set t_Co=256
     endif
-    let g:airline_powerline_fonts = 1
-    let g:airline_left_sep          = '⮀'
-    let g:airline_left_alt_sep      = '⮁'
-    let g:airline_right_sep         = '⮂'
-    let g:airline_right_alt_sep     = '⮃'
-    let g:airline_branch_prefix     = '⭠'
-    let g:airline_readonly_symbol   = '⭤'
-    let g:airline_linecolumn_prefix = '⭡'
-    let g:airline_theme             = 'powerlineish'
-    let g:airline_enable_branch     = 1
-    let g:airline_enable_syntastic  = 1
-    " 是否打开tabline
-    let g:airline#extensions#tabline#enabled = 1
+    set noshowmode
+    let g:lightline = {
+      \ 'colorscheme': 'default',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 " }}}
 
 " vimgo {{{
@@ -269,8 +265,8 @@ call plug#end()
 " }}}
 
 " easyalign {{{
-    vmap <Leader>a <Plug>(EasyAlign)
-    nmap <Leader>a <Plug>(EasyAlign)
+    vmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
     if !exists('g:easy_align_delimiters')
     let g:easy_align_delimiters = {}
     endif
@@ -338,10 +334,6 @@ call plug#end()
     let g:gitgutter_enabled = 0
     let g:gitgutter_highlight_lines = 1
     nnoremap <leader>gs :GitGutterToggle<CR>
-" }}}
-
-" gundo {{{
-    noremap <leader>h :GundoToggle<CR>
 " }}}
 
 " Keymaps
