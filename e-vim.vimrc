@@ -20,6 +20,8 @@ set showcmd
 set showmode
 set showmatch
 set wildmenu
+set cursorline
+set nu
 set guifont=*
 set t_ti= t_te=
 set encoding=utf-8
