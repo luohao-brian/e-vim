@@ -25,6 +25,16 @@ yum install -y git ctags the_silver_searcher
 cp e-vim.vimrc ~/.vimrc
 vim +PlugInstall
 ```
+#### Debian Linux
+
+```sh
+# 安装依赖包
+apt-get install git ctags silversearcher-ag
+
+# vim配置及初始化
+cp e-vim.vimrc ~/.vimrc
+vim +PlugInstall
+```
 
 ### 使用技巧
 
