@@ -233,9 +233,6 @@ call plug#end()
     let g:NERDTreeMapOpenSplit = 's'
     let g:NERDTreeMapOpenVSplit = 'v'
 
-
-    " nerdtreetabs
-    map <Leader>n <plug>NERDTreeTabsToggle<CR>
     " 关闭同步
     " let g:nerdtree_tabs_synchronize_view=0
     " let g:nerdtree_tabs_synchronize_focus=0
@@ -280,7 +277,6 @@ call plug#end()
 
 " 标签导航
 " tagbar {{{
-    nmap <Leader>t :TagbarToggle<CR>
     let g:tagbar_autofocus = 1
     " let g:tagbar_autoshowtag = 1
     " let g:tagbar_show_visibility = 1
@@ -357,3 +353,21 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-K> <C-W><C-K>
 
+" quickfix window快捷键
+nnoremap <leader>q :call QuickfixToggle()<cr>
+let g:quickfix_is_open = 0
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
+" Tagbar 快捷键
+nmap <Leader>t :TagbarToggle<CR>
+
+" nerdtreetabs 快捷键
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
