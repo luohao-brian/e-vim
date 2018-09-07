@@ -86,6 +86,7 @@ nmap <Leader>t :TagbarToggle<CR>
 :cn     下一条
 :cp     上一条
 :ccl    关闭quickfix
+:cope   重新开启quickfix
 :CTRL+j 切换到quickfix
 :CTRL+k 切换回编辑窗口
 ```
