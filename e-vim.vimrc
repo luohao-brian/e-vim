@@ -55,6 +55,9 @@ set softtabstop=4
 set background=dark
 colorscheme desert
 
+" Mouse
+set mouse=
+
 " Vim-Plug auto-install
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -87,6 +90,9 @@ call plug#begin('~/.vim/plugged')
     " 快速赋值语句对齐
     Plug 'junegunn/vim-easy-align'
 
+    " 支持相对行号, set number relativenumber生效
+    Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
     " git
     " fugitive
     Plug 'tpope/vim-fugitive'
@@ -112,16 +118,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'hdima/python-syntax'
     Plug 'hynek/vim-python-pep8-indent'
     Plug 'Glench/Vim-Jinja2-Syntax'
-    " Javascript
-    Plug 'othree/yajs.vim' | Plug 'pangloss/vim-javascript'
     " Json
     Plug 'elzr/vim-json', {'for': 'json'}
-    " CSS
-    Plug 'groenewege/vim-less'
     " Markdown
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
-    " Nginx
-    Plug 'chr4/nginx.vim'
 call plug#end()
 
 " lightline {{{
@@ -168,18 +168,8 @@ call plug#end()
     let g:vim_markdown_folding_disabled=1
 " }}}
 
-" javascript {{{
-    " pangloss/vim-javascript
-    let g:html_indent_inctags = "html,body,head,tbody"
-    let g:html_indent_script1 = "inc"
-    let g:html_indent_style1 = "inc"
-" }}}
-
 " json {{{
     let g:vim_json_syntax_conceal = 0
-" }}}
-
-" css {{{
 " }}}
 
 " solarized {{{
