@@ -106,6 +106,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
     " Golang
     Plug 'fatih/vim-go', {'for': 'go'}
+    " Rust
+    Plug 'rust-lang/rust.vim', {'for': 'rs'}
     " Python
     Plug 'hdima/python-syntax'
     Plug 'hynek/vim-python-pep8-indent'
@@ -152,6 +154,10 @@ call plug#end()
     let g:go_fmt_command = "goimports"
     let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
+" }}}
+
+" rust {{{
+    let g:rustfmt_autosave = 1
 " }}}
 
 " pythonsyntax {{{
