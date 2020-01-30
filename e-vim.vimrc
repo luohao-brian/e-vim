@@ -102,9 +102,6 @@ call plug#begin('~/.vim/plugged')
     " tagbar
     Plug 'majutsushi/tagbar'
 
-    "全局搜索，support by the_silver_searcher
-    Plug 'mileszs/ack.vim'
-
     " 主题 solarized
     " solarized
     Plug 'altercation/vim-colors-solarized'
@@ -179,11 +176,6 @@ call plug#end()
     let g:solarized_termcolors=256
 " }}}
 
-" ack {{{
-    "ACK配置
-    let g:ackprg = 'ag --nogroup --nocolor --column'
-" }}}
-"
 " rainbow_parentheses {{{
     " 不加入这行, 防止黑色括号出现, 很难识别
     " \ ['black',       'SeaGreen3'],
@@ -343,12 +335,6 @@ nmap    w-  :resize -3<CR>
 nmap    w,  :vertical resize -3<CR>
 nmap    w.  :vertical resize +3<CR>
 
-" 分屏窗口快捷键
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-K> <C-W><C-K>
-
 " quickfix window快捷键
 nnoremap <leader>q :call QuickfixToggle()<cr>
 let g:quickfix_is_open = 0
@@ -361,9 +347,14 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+nnoremap <leader>cn :cn<cr>
+nnoremap <leader>cp :cp<cp>
 
 " Tagbar 快捷键
 nmap <Leader>t :TagbarToggle<CR>
 
 " nerdtreetabs 快捷键
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+" numbertoggle开启关闭快捷键，参考:help numbertoggle
+nnoremap <silent> <C-L> :set relativenumber!<cr>

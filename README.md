@@ -19,7 +19,7 @@ vim +PlugInstall
 ```sh
 # 安装依赖包
 yum install -y epel-release && yum -y update
-yum install -y git ctags the_silver_searcher
+yum install -y git ctags
 
 # vim配置及初始化
 cp e-vim.vimrc ~/.vimrc
@@ -29,7 +29,7 @@ vim +PlugInstall
 
 ```sh
 # 安装依赖包
-apt-get install git ctags silversearcher-ag
+apt-get install git ctags
 
 # vim配置及初始化
 cp e-vim.vimrc ~/.vimrc
@@ -38,24 +38,110 @@ vim +PlugInstall
 
 ### 使用技巧
 
+### undo & redo
+
+* u 撤销
+* ctrl + r 反撤销
+
+
 #### 标签页
 ```
-nnoremap <S-Left> :tabprevious<CR>
-nnoremap <S-Right> :tabnext<CR>
-nnoremap <C-n> :tabnew<CR>
+1. 新建标签
+nnoremap <C-n> :tabnew<CR> 
+
+2. 关闭标签
 nnoremap <C-x> :tabclose<CR>
+
+3. 移动到前一个标签
+nnoremap <S-Left> :tabprevious<CR>
+
+4. 移动到下一个标签
+nnoremap <S-Right> :tabnext<CR>
+
 ```
 
 #### 分屏窗口
 
-分屏窗口快捷键重定义如下：
+开启或者关闭分屏
 ```
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-K> <C-W><C-K>
+1. 垂直分屏
+:vs [file2]
+
+2.水平分屏
+:sv [file2]
+
+3. 新建文件水平分屏
+:new [newfile]
 ```
-调整分屏窗口的大小:
+
+分屏窗口默认操作快捷键如下：
+```
+1. 把光标移到右边的屏中
+ctrl+w l
+
+2. 把光标移到左边的屏中
+ctrl+w h
+
+3. 把光标移到上边的屏中
+ctrl+w k
+
+4. 把光标移到下边的屏中
+ctrl+w j
+
+5. 把光标移到下一个屏中
+ctrl+w w
+
+6. 把光标移到上一个屏中
+ctrl+w p
+
+7. 减少当前窗口高度（对上下分屏才有用）
+ctrl+w - 亲测字体大小会发生变化
+
+8. 增加当前窗口高度（对上下分屏才有用）
+ctrl+w + 亲测字体大小会发生变化
+
+9. 增加当前窗口宽度（对左右分屏才有用）
+ctrl+w > 按完ctrl w 后松开,同时按下shift >
+
+10. 减少当前窗口宽度（对左右分屏才有用）
+ctrl+w < 按完ctrl w 后松开,同时按下shift <
+
+11. 使所有窗口恢复均等
+ctrl+w =
+
+12. 关闭除当前分屏外的其他分屏
+ctrl+w o(最后一个分屏不能用此快捷键关闭)
+
+13. 关闭当前分屏
+ctrl+w c (最后一个分屏不能用此快捷键关闭)
+
+14. 关闭当前分屏
+ctrl+w q (可用来关闭最后一个分屏)
+
+15. 向右移动
+ctrl+w L
+
+16. 向左移动
+ctrl+w H
+
+17. 向上移动
+ctrl+w K
+
+18. 向下移动
+ctrl+w J
+
+19. 向下旋转窗口
+ctrl+w r
+
+20. 向上旋转窗口
+ctrl+w R
+
+21. 当前窗口与下一个窗口对调
+ctrl+w x
+```
+
+重新定义调整分屏窗口的大小快捷键:
+
 ```
 "垂直调节
 nmap    w=  :resize +3<CR>
@@ -68,27 +154,14 @@ nmap    w.  :vertical resize +3<CR>
 #### NERDTree文件列表
 
 ```
+1. 开启文件树分屏窗口
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 ```
 
 #### Tagbar符号列表
 ```
+1. 开启符号列表分屏窗口
 nmap <Leader>t :TagbarToggle<CR>
-```
-
-#### 全局搜索
-```
-:Ack Keyword
-```
-使用Ack插件支持全局搜索，调用ag命令，弹出quickfix window:
-
-```
-:cn     下一条
-:cp     上一条
-:ccl    关闭quickfix
-:cope   重新开启quickfix
-:CTRL+j 切换到quickfix
-:CTRL+k 切换回编辑窗口
 ```
 
 #### 开启git diff显示
@@ -102,22 +175,40 @@ nnoremap <leader>gs :GitGutterToggle<CR>
 map <leader><space> :FixWhitespace<cr>
 ```
 
-### FAQ
+### 相对行号
 
-#### git commit打印未知命令错误
+numbertoggle插件开启关闭快捷键，参考:help numbertoggle
+```
+nnoremap <silent> <C-L> :set relativenumber!<cr>
+```
+### Quickfix窗口
+
+一般在输入:make的时候会自动弹出quickfix窗口，开启或者关闭quickfix窗口, 下面快捷键重新定义了quickfix窗口的开启和关闭
+```
+nnoremap <leader>q :call QuickfixToggle()<cr>
+let g:quickfix_is_open = 0
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+```
+quickfix窗口默认快捷键
 
 ```
-E538: No mouse support: mouse=a
-line   68:
-E492: Not an editor command:     Plug 'vim-airline/vim-airline'
-line   69:
-......
+:copen 打开Quickfix窗口
+:cclose 关闭Quickfix窗口
+:cn 跳到下一个Error的所在行
+:cp 调到上一个Error的所在行
 ```
-
-git默认的编辑器命令为vi, 不兼容vim配置语法，可以配置git编辑器为vim
+重定义错误切换快捷键
 ```
-git config --global core.editor vim
-
+nnoremap <leader>cn :cn<cr>
+nnoremap <leader>cp :cp<cp>
 ```
 
 ### 参考
