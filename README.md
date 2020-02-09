@@ -38,6 +38,9 @@ vim +PlugInstall
 
 ### 使用技巧
 
+### Leader按键
+Leader按键被定义为','符号
+
 ### undo & redo
 
 * u 撤销
@@ -76,23 +79,23 @@ nnoremap <S-Right> :tabnext<CR>
 
 分屏窗口默认操作快捷键如下：
 ```
-1. 把光标移到右边的屏中
-ctrl+w l
-
-2. 把光标移到左边的屏中
-ctrl+w h
-
-3. 把光标移到上边的屏中
-ctrl+w k
-
-4. 把光标移到下边的屏中
-ctrl+w j
-
-5. 把光标移到下一个屏中
+1. 把光标移到下一个屏中
 ctrl+w w
 
-6. 把光标移到上一个屏中
+2. 把光标移到上一个屏中
 ctrl+w p
+
+3. 把光标移到右边的屏中
+ctrl+w l
+
+4. 把光标移到左边的屏中
+ctrl+w h
+
+5. 把光标移到上边的屏中
+ctrl+w k
+
+6. 把光标移到下边的屏中
+ctrl+w j
 
 7. 减少当前窗口高度（对上下分屏才有用）
 ctrl+w - 亲测字体大小会发生变化
@@ -210,6 +213,12 @@ quickfix窗口默认快捷键
 nnoremap <leader>cn :cn<cr>
 nnoremap <leader>cp :cp<cp>
 ```
+
+### ctags
+
+1. 在源代码目录下执行ctags -R .
+2. ctrl + ], 找到光标所在位置的标签定义的地方
+3. Ctrl + T, 回到跳转之前的标签处
 
 ### 参考
 - [k-vim](https://github.com/wklken/k-vim)
