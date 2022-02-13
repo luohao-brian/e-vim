@@ -93,12 +93,6 @@ call plug#begin('~/.vim/plugged')
     " 支持相对行号, set number relativenumber生效
     Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
-    " git
-    " fugitive
-    Plug 'tpope/vim-fugitive'
-    " gitgutter
-    Plug 'airblade/vim-gitgutter'
-
     " tagbar
     Plug 'majutsushi/tagbar'
 
