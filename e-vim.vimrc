@@ -115,24 +115,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
 call plug#end()
 
-" lightline {{{
-    set laststatus=2
-    if !has('gui_running')
-        set t_Co=256
-    endif
-    set noshowmode
-    let g:lightline = {
-      \ 'colorscheme': 'default',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
-" }}}
-
 " vimgo {{{
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
@@ -294,26 +276,6 @@ call plug#end()
         \ 'ctagsbin'  : 'gotags',
         \ 'ctagsargs' : '-sort -silent'
     \ }
-" }}}
-
-" fugitive {{{
-    " :Gdiff  :Gstatus :Gvsplit
-    " not ready to open
-    " <leader>gb maps to :Gblame<CR>
-    " <leader>gs maps to :Gstatus<CR>
-    " <leader>gd maps to :Gdiff<CR>  和现有冲突
-    " <leader>gl maps to :Glog<CR>
-    " <leader>gc maps to :Gcommit<CR>
-    " <leader>gp maps to :Git push<CR>
-" }}}
-
-" gitgutter {{{
-    " 同git diff,实时展示文件中修改的行
-    " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
-    let g:gitgutter_map_keys = 0
-    let g:gitgutter_enabled = 0
-    let g:gitgutter_highlight_lines = 1
-    nnoremap <leader>gs :GitGutterToggle<CR>
 " }}}
 
 " Keymaps
