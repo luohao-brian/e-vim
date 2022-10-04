@@ -6,19 +6,19 @@ let g:mapleader = ','
 syntax on
 set backspace=indent,eol,start
 set history=2000
-set nocompatible
 filetype on
 filetype plugin on
 filetype indent on
-set magic
 set title
-set nobackup
-set novisualbell
-set noerrorbells
+set nobackup "不创建备份文件
+set noswapfile "不创建交换文件
+set nowritebackup " 表示编辑的时候不需要备份文件
+set novisualbell "进入virutal模式，不要发出响声
+set noerrorbells "出错时，不要发出响声
 set ruler
 set showcmd
-set showmode
-set showmatch
+set showmode "输入的命令显示出来
+set showmatch "设置匹配模式, 相当于括号匹配
 set wildmenu
 set cursorline
 set nu
@@ -28,7 +28,7 @@ set encoding=utf-8
 set termencoding=utf-8
 set ffs=unix,dos,mac
 if &term =~ '256color'
-  " disable Background Color Erase (BCE) so that color schemes
+" disable Background Color Erase (BCE) so that color schemes
   " render properly when inside 256-color tmux and GNU screen.
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
@@ -50,10 +50,17 @@ set autoindent smartindent shiftround
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+set nocompatible "close compatible mode
+set shiftwidth=4 " Indents will have a width of 4
 
 " Theme
 set background=dark
 colorscheme desert
+
+" enable true color
+if (has("termguicolors"))
+    set termguicolors
+endif
 
 " Mouse
 set mouse=
@@ -93,14 +100,19 @@ call plug#begin('~/.vim/plugged')
     " 支持相对行号, set number relativenumber生效
     Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
-    " tagbar
+    "代码结构浏览
     Plug 'majutsushi/tagbar'
+    "文件查找插件
+    Plug 'ctrlpvim/ctrlp.vim'
+    "文件系统浏览器
+    Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
+    "根据文件内容查找文件
+    Plug 'mhinz/vim-grepper'
 
     " 主题 solarized
     " solarized
     Plug 'altercation/vim-colors-solarized'
-    " nerdtree nerdtreetabs
-    Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
+
     " Golang
     Plug 'fatih/vim-go', {'for': 'go'}
     " Rust
@@ -183,8 +195,14 @@ call plug#end()
 
 " nerdtree nerdtreetabs {{{
     " map <leader>n :NERDTreeToggle<CR>
+    let g:NERDTreeDirArrowExpandable = '▸'
+    let g:NERDTreeDirArrowCollapsible = '▾'
+    " s/v 分屏打开文件
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+
     let NERDTreeHighlightCursorline=1
-    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+    let NERDTreeIgnore=[ '^[.][[dir]]', 'vendor$[[dir]]', '\.DS_Store$[[file]]', '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
     "close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
     " open a NERDTree when vim starts up if no files were specified?
@@ -192,10 +210,6 @@ call plug#end()
     autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     " open NERDTree when vim starts up on opening a directory
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-    " s/v 分屏打开文件
-    let g:NERDTreeMapOpenSplit = 's'
-    let g:NERDTreeMapOpenVSplit = 'v'
 
     " 关闭同步
     " let g:nerdtree_tabs_synchronize_view=0
@@ -239,46 +253,75 @@ call plug#end()
     let g:easy_align_ignore_groups = ['Comment', 'String']
 " }}}
 
-" 标签导航
-" tagbar {{{
-    let g:tagbar_autofocus = 1
-    " let g:tagbar_autoshowtag = 1
-    " let g:tagbar_show_visibility = 1
 
-    " go语言的tagbar配置
-    " 1. install gotags 'go get -u github.com/jstemmer/gotags'
-    " 2. make sure `gotags` in you shell PATH, you can call check it with `which gotags`
-    " for gotags. work with tagbar
-    let g:tagbar_type_go = {
-        \ 'ctagstype' : 'go',
-        \ 'kinds'     : [
-            \ 'p:package',
-            \ 'i:imports:1',
-            \ 'c:constants',
-            \ 'v:variables',
-            \ 't:types',
-            \ 'n:interfaces',
-            \ 'w:fields',
-            \ 'e:embedded',
-            \ 'm:methods',
-            \ 'r:constructor',
-            \ 'f:functions'
-        \ ],
-        \ 'sro' : '.',
-        \ 'kind2scope' : {
-            \ 't' : 'ctype',
-            \ 'n' : 'ntype'
-        \ },
-        \ 'scope2kind' : {
-            \ 'ctype' : 't',
-            \ 'ntype' : 'n'
-        \ },
-        \ 'ctagsbin'  : 'gotags',
-        \ 'ctagsargs' : '-sort -silent'
-    \ }
-" }}}
+" go tagbar配置
+" 依赖 https://github.com/jstemmer/gotags 必须要安装
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
 
-" Keymaps
+" rust TagBar配置
+" 依赖 https://github.com/universal-ctags/ctags必须要安装
+let g:rust_use_custom_ctags_defs = 1  " if using rust.vim
+let g:tagbar_type_rust = {
+  \ 'ctagsbin' : 'ctags',
+  \ 'ctagstype' : 'rust',
+  \ 'kinds' : [
+      \ 'n:modules',
+      \ 's:structures:1',
+      \ 'i:interfaces',
+      \ 'c:implementations',
+      \ 'f:functions:1',
+      \ 'g:enumerations:1',
+      \ 't:type aliases:1:0',
+      \ 'v:constants:1:0',
+      \ 'M:macros:1',
+      \ 'm:fields:1:0',
+      \ 'e:enum variants:1:0',
+      \ 'P:methods:1',
+  \ ],
+  \ 'sro': '::',
+  \ 'kind2scope' : {
+      \ 'n': 'module',
+      \ 's': 'struct',
+      \ 'i': 'interface',
+      \ 'c': 'implementation',
+      \ 'f': 'function',
+      \ 'g': 'enum',
+      \ 't': 'typedef',
+      \ 'v': 'variable',
+      \ 'M': 'macro',
+      \ 'm': 'field',
+      \ 'e': 'enumerator',
+      \ 'P': 'method',
+  \ },
+\ }
+
+" 键盘映射
 " Tab pages
 nnoremap <S-Left> :tabprevious<CR>
 nnoremap <S-Right> :tabnext<CR>
@@ -291,7 +334,19 @@ nmap    w-  :resize -3<CR>
 nmap    w,  :vertical resize -3<CR>
 nmap    w.  :vertical resize +3<CR>
 
-" quickfix window快捷键
+" Tagbar 快捷键
+nmap <Leader>t :TagbarToggle<CR>
+
+" nerdtreetabs 快捷键
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+" numbertoggle开启关闭快捷键，参考:help numbertoggle
+nnoremap <silent> <C-L> :set relativenumber!<cr>
+
+" vim-grepper插件
+nnoremap <leader>g :Grepper -tool ag<cr>
+
+" Quickfix Window开启/关闭
 nnoremap <leader>q :call QuickfixToggle()<cr>
 let g:quickfix_is_open = 0
 function! QuickfixToggle()
@@ -303,14 +358,3 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
-nnoremap <leader>cn :cn<cr>
-nnoremap <leader>cp :cp<cp>
-
-" Tagbar 快捷键
-nmap <Leader>t :TagbarToggle<CR>
-
-" nerdtreetabs 快捷键
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-
-" numbertoggle开启关闭快捷键，参考:help numbertoggle
-nnoremap <silent> <C-L> :set relativenumber!<cr>

@@ -1,6 +1,6 @@
 ### 介绍
 
-我平时一般用css/js/html做前端开发，go/python做后端开发，c/c++做系统开发，git做SCM工具, 这是我的vim配置。
+我平时一般用css/js/html做前端开发，go/python做后端开发，c/c++/rust做系统开发，git做SCM工具, 这是我的vim配置。
 
 ### 安装
 
@@ -8,28 +8,18 @@
 
 ```sh
 # 安装依赖包
-brew install git ctags the_silver_searcher
+brew install universal-ctags the_silver_searcher
 
 # vim配置及初始化
 cp e-vim.vimrc ~/.vimrc
 vim +PlugInstall
 ```
-#### CentOS Linux
+
+#### Ubuntu Linux 20.04
 
 ```sh
 # 安装依赖包
-yum install -y epel-release && yum -y update
-yum install -y git ctags
-
-# vim配置及初始化
-cp e-vim.vimrc ~/.vimrc
-vim +PlugInstall
-```
-#### Debian Linux
-
-```sh
-# 安装依赖包
-apt-get install git ctags
+apt-get install universal-ctags silversearcher-ag
 
 # vim配置及初始化
 cp e-vim.vimrc ~/.vimrc
@@ -50,7 +40,7 @@ Leader按键被定义为','符号
 #### 标签页
 ```
 1. 新建标签
-nnoremap <C-n> :tabnew<CR> 
+nnoremap <C-n> :tabnew<CR>
 
 2. 关闭标签
 nnoremap <C-x> :tabclose<CR>
@@ -68,10 +58,10 @@ nnoremap <S-Right> :tabnext<CR>
 开启或者关闭分屏
 ```
 1. 垂直分屏
-:vs [file2]
+:vs [file2], 或者ctrl+w v
 
 2.水平分屏
-:sv [file2]
+:sv [file2], 或者ctrl+w n
 
 3. 新建文件水平分屏
 :new [newfile]
@@ -154,39 +144,48 @@ nmap    w,  :vertical resize -3<CR>
 nmap    w.  :vertical resize +3<CR>
 ```
 
-#### NERDTree文件列表
+#### 文件列表 (NERDTree插件)
 
 ```
 1. 开启文件树分屏窗口
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 ```
 
-#### Tagbar符号列表
+#### 符号列表 (Tagbar插件)
 ```
 1. 开启符号列表分屏窗口
 nmap <Leader>t :TagbarToggle<CR>
 ```
 
-#### 开启git diff显示
-```
-nnoremap <leader>gs :GitGutterToggle<CR>
-```
-
-#### 清除多余空格
+#### 清除多余空格 (vim-trailing-whitespace插件)
 
 ```
 map <leader><space> :FixWhitespace<cr>
 ```
 
-### 相对行号
+### 相对行号 (vim-numbertoggle插件)
 
 numbertoggle插件开启关闭快捷键，参考:help numbertoggle
 ```
 nnoremap <silent> <C-L> :set relativenumber!<cr>
 ```
-### Quickfix窗口
 
-一般在输入:make的时候会自动弹出quickfix窗口，开启或者关闭quickfix窗口, 下面快捷键重新定义了quickfix窗口的开启和关闭
+### VIM中查找指定的文件，Vim 中的 find (ctrlp插件)
+Ctrl+p进入查找模式，输入指定的文件名, 按Ctrl+c返回到之前的模式
+
+
+### ctags
+
+1. 在源代码目录下执行ctags -R .
+2. ctrl + ], 找到光标所在位置的标签定义的地方
+3. Ctrl + o, 回到跳转之前的标签处
+
+### VIM中模糊搜索(vim-grepper插件)
+```
+nnoremap <leader>g :Grepper -tool ag<cr>
+```
+
+搜索结果会自动弹出quickfix窗口，开启或者关闭quickfix窗口, 下面快捷键重新定义了quickfix窗口的开启和关闭
 ```
 nnoremap <leader>q :call QuickfixToggle()<cr>
 let g:quickfix_is_open = 0
@@ -200,26 +199,8 @@ function! QuickfixToggle()
     endif
 endfunction
 ```
-quickfix窗口默认快捷键
-
-```
-:copen 打开Quickfix窗口
-:cclose 关闭Quickfix窗口
-:cn 跳到下一个Error的所在行
-:cp 调到上一个Error的所在行
-```
-重定义错误切换快捷键
-```
-nnoremap <leader>cn :cn<cr>
-nnoremap <leader>cp :cp<cp>
-```
-
-### ctags
-
-1. 在源代码目录下执行ctags -R .
-2. ctrl + ], 找到光标所在位置的标签定义的地方
-3. Ctrl + T, 回到跳转之前的标签处
 
 ### 参考
 - [k-vim](https://github.com/wklken/k-vim)
 - [amix/vimrc](https://github.com/amix/vimrc)
+- [wandercn/go-ide-vim.conf](https://github.com/wandercn/go-ide-vim.conf)
