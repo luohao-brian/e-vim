@@ -55,7 +55,7 @@ set shiftwidth=4 " Indents will have a width of 4
 
 " Theme
 set background=dark
-colorscheme desert
+"colorscheme desert
 
 " enable true color
 if (has("termguicolors"))
