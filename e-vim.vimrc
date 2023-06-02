@@ -20,7 +20,7 @@ set showcmd
 set showmode "输入的命令显示出来
 set showmatch "设置匹配模式, 相当于括号匹配
 set wildmenu
-set cursorline
+"set cursorline
 set nu
 set guifont=*
 set t_ti= t_te=
