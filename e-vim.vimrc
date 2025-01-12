@@ -97,9 +97,6 @@ call plug#begin('~/.vim/plugged')
     " 快速赋值语句对齐
     Plug 'junegunn/vim-easy-align'
 
-    " 支持相对行号, set number relativenumber生效
-    Plug 'jeffkreeftmeijer/vim-numbertoggle'
-
     "代码结构浏览
     Plug 'majutsushi/tagbar'
     "文件查找插件
@@ -340,8 +337,6 @@ nmap <Leader>t :TagbarToggle<CR>
 " nerdtreetabs 快捷键
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
-" numbertoggle开启关闭快捷键，参考:help numbertoggle
-nnoremap <silent> <C-L> :set relativenumber!<cr>
 
 " vim-grepper插件
 nnoremap <leader>g :Grepper -tool ag<cr>
