@@ -53,6 +53,9 @@ set softtabstop=4
 set nocompatible "close compatible mode
 set shiftwidth=4 " Indents will have a width of 4
 
+" 标签页
+set showtabline=2
+
 " Theme
 set background=dark
 "colorscheme desert
@@ -78,14 +81,6 @@ call plug#begin('~/.vim/plugged')
     " rainbow_parentheses
     " 括号显示增强
     Plug 'kien/rainbow_parentheses.vim'
-    " 自动补全单引号，双引号等
-    Plug 'Raimondi/delimitMate'
-    " 自动补全html/xml标签
-    Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
-
-    " quick edit
-    " 快速注释
-    Plug 'scrooloose/nerdcommenter'
 
     " 快速加入修改环绕字符
     " for repeat -> enhance surround.vim, . to repeat command
@@ -99,8 +94,6 @@ call plug#begin('~/.vim/plugged')
 
     "代码结构浏览
     Plug 'majutsushi/tagbar'
-    "文件查找插件
-    Plug 'ctrlpvim/ctrlp.vim'
     "文件系统浏览器
     Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
     "根据文件内容查找文件
@@ -197,6 +190,8 @@ call plug#end()
     " s/v 分屏打开文件
     let g:NERDTreeMapOpenSplit = 's'
     let g:NERDTreeMapOpenVSplit = 'v'
+    " 默认窗口size
+    let g:NERDTreeWinSize = 20
 
     let NERDTreeHighlightCursorline=1
     let NERDTreeIgnore=[ '^[.][[dir]]', 'vendor$[[dir]]', '\.DS_Store$[[file]]', '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
@@ -208,11 +203,6 @@ call plug#end()
     " open NERDTree when vim starts up on opening a directory
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-    " 关闭同步
-    " let g:nerdtree_tabs_synchronize_view=0
-    " let g:nerdtree_tabs_synchronize_focus=0
-    " 是否自动开启nerdtree
-    " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
     let g:nerdtree_tabs_open_on_console_startup=0
     let g:nerdtree_tabs_open_on_gui_startup=0
 " }}}
@@ -251,73 +241,6 @@ call plug#end()
 " }}}
 
 
-" go tagbar配置
-" 依赖 https://github.com/jstemmer/gotags 必须要安装
-let g:tagbar_type_go = {
-	\ 'ctagstype' : 'go',
-	\ 'kinds'     : [
-		\ 'p:package',
-		\ 'i:imports:1',
-		\ 'c:constants',
-		\ 'v:variables',
-		\ 't:types',
-		\ 'n:interfaces',
-		\ 'w:fields',
-		\ 'e:embedded',
-		\ 'm:methods',
-		\ 'r:constructor',
-		\ 'f:functions'
-	\ ],
-	\ 'sro' : '.',
-	\ 'kind2scope' : {
-		\ 't' : 'ctype',
-		\ 'n' : 'ntype'
-	\ },
-	\ 'scope2kind' : {
-		\ 'ctype' : 't',
-		\ 'ntype' : 'n'
-	\ },
-	\ 'ctagsbin'  : 'gotags',
-	\ 'ctagsargs' : '-sort -silent'
-\ }
-
-" rust TagBar配置
-" 依赖 https://github.com/universal-ctags/ctags必须要安装
-let g:rust_use_custom_ctags_defs = 1  " if using rust.vim
-let g:tagbar_type_rust = {
-  \ 'ctagsbin' : 'ctags',
-  \ 'ctagstype' : 'rust',
-  \ 'kinds' : [
-      \ 'n:modules',
-      \ 's:structures:1',
-      \ 'i:interfaces',
-      \ 'c:implementations',
-      \ 'f:functions:1',
-      \ 'g:enumerations:1',
-      \ 't:type aliases:1:0',
-      \ 'v:constants:1:0',
-      \ 'M:macros:1',
-      \ 'm:fields:1:0',
-      \ 'e:enum variants:1:0',
-      \ 'P:methods:1',
-  \ ],
-  \ 'sro': '::',
-  \ 'kind2scope' : {
-      \ 'n': 'module',
-      \ 's': 'struct',
-      \ 'i': 'interface',
-      \ 'c': 'implementation',
-      \ 'f': 'function',
-      \ 'g': 'enum',
-      \ 't': 'typedef',
-      \ 'v': 'variable',
-      \ 'M': 'macro',
-      \ 'm': 'field',
-      \ 'e': 'enumerator',
-      \ 'P': 'method',
-  \ },
-\ }
-
 " 键盘映射
 " Tab pages
 nnoremap <S-Left> :tabprevious<CR>
@@ -328,8 +251,8 @@ nnoremap <C-x> :tabclose<CR>
 " 分屏窗口调整大小
 nmap    w=  :resize +3<CR>
 nmap    w-  :resize -3<CR>
-nmap    w,  :vertical resize -3<CR>
-nmap    w.  :vertical resize +3<CR>
+nmap    w,  :vertical resize -5<CR>
+nmap    w.  :vertical resize +5<CR>
 
 " Tagbar 快捷键
 nmap <Leader>t :TagbarToggle<CR>
@@ -341,15 +264,4 @@ map <Leader>n <plug>NERDTreeTabsToggle<CR>
 " vim-grepper插件
 nnoremap <leader>g :Grepper -tool ag<cr>
 
-" Quickfix Window开启/关闭
-nnoremap <leader>q :call QuickfixToggle()<cr>
-let g:quickfix_is_open = 0
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-    else
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
+

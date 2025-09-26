@@ -140,8 +140,8 @@ ctrl+w x
 nmap    w=  :resize +3<CR>
 nmap    w-  :resize -3<CR>
 "水平调节
-nmap    w,  :vertical resize -3<CR>
-nmap    w.  :vertical resize +3<CR>
+nmap    w,  :vertical resize -5<CR>
+nmap    w.  :vertical resize +5<CR>
 ```
 
 #### 文件列表 (NERDTree插件)
@@ -183,21 +183,6 @@ Ctrl+p进入查找模式，输入指定的文件名, 按Ctrl+c返回到之前的
 ### VIM中模糊搜索(vim-grepper插件)
 ```
 nnoremap <leader>g :Grepper -tool ag<cr>
-```
-
-搜索结果会自动弹出quickfix窗口，开启或者关闭quickfix窗口, 下面快捷键重新定义了quickfix窗口的开启和关闭
-```
-nnoremap <leader>q :call QuickfixToggle()<cr>
-let g:quickfix_is_open = 0
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-    else
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
 ```
 
 ### 参考
