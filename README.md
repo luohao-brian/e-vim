@@ -137,8 +137,8 @@ ctrl+w x
 
 ```
 "垂直调节
-nmap    w=  :resize +3<CR>
-nmap    w-  :resize -3<CR>
+nmap    h,  :resize +3<CR>
+nmap    h.  :resize -3<CR>
 "水平调节
 nmap    w,  :vertical resize -5<CR>
 nmap    w.  :vertical resize +5<CR>
@@ -147,13 +147,13 @@ nmap    w.  :vertical resize +5<CR>
 #### 文件列表 (NERDTree插件)
 
 ```
-1. 开启文件树分屏窗口
+" 开启文件树分屏窗口
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 ```
 
 #### 符号列表 (Tagbar插件)
 ```
-1. 开启符号列表分屏窗口
+" 开启符号列表分屏窗口
 nmap <Leader>t :TagbarToggle<CR>
 ```
 
@@ -173,6 +173,18 @@ nnoremap <silent> <C-L> :set relativenumber!<cr>
 ### VIM中查找指定的文件，Vim 中的 find (ctrlp插件)
 Ctrl+p进入查找模式，输入指定的文件名, 按Ctrl+c返回到之前的模式
 
+### VIM中模糊搜索(vim-grepper插件)
+```
+nnoremap <leader>g :Grepper -tool ag<cr>
+```
+
+### Easy Align
+
+```
+vmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+```
 
 ### ctags
 
@@ -180,12 +192,8 @@ Ctrl+p进入查找模式，输入指定的文件名, 按Ctrl+c返回到之前的
 2. ctrl + ], 找到光标所在位置的标签定义的地方
 3. Ctrl + t, 回到跳转之前的标签处
 
-### VIM中模糊搜索(vim-grepper插件)
-```
-nnoremap <leader>g :Grepper -tool ag<cr>
-```
-
 ### 参考
 - [k-vim](https://github.com/wklken/k-vim)
 - [amix/vimrc](https://github.com/amix/vimrc)
 - [wandercn/go-ide-vim.conf](https://github.com/wandercn/go-ide-vim.conf)
+- [easyalign 参考用法](https://www.bookstack.cn/read/learn-vim/plugins-easyalign.md)

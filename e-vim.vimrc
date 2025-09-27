@@ -10,6 +10,11 @@ filetype on
 filetype plugin on
 filetype indent on
 set title
+set ruler                   " 打开状态栏标尺
+set cursorline              " 突出显示当前行
+set magic                   " 设置魔术
+set guioptions-=T           " 隐藏工具栏
+set guioptions-=m           " 隐藏菜单栏
 set nobackup "不创建备份文件
 set noswapfile "不创建交换文件
 set nowritebackup " 表示编辑的时候不需要备份文件
@@ -53,7 +58,7 @@ set softtabstop=4
 set nocompatible "close compatible mode
 set shiftwidth=4 " Indents will have a width of 4
 
-" 标签页
+" 标签页, 总是显示
 set showtabline=2
 
 " Theme
@@ -67,6 +72,18 @@ endif
 
 " Mouse
 set mouse=
+
+"编码设置
+set enc=utf-8
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+"语言设置
+set langmenu=zh_CN.UTF-8
+set helplang=cn
+" 总是显示状态行
+set laststatus=2
+" 命令行（在状态行下）的高度，默认为1，这里是2
+set cmdheight=2
+
 
 " Vim-Plug auto-install
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -115,6 +132,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'elzr/vim-json', {'for': 'json'}
     " Markdown
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
+
 call plug#end()
 
 " vimgo {{{
@@ -224,24 +242,41 @@ call plug#end()
     let g:NERDAltDelims_python = 1
 " }}}
 
+" 键盘映射
+" 移除行尾空格
 " trailingwhitespace {{{
     map <leader><space> :FixWhitespace<cr>
 " }}}
 
-" easyalign {{{
-    vmap ga <Plug>(EasyAlign)
-    nmap ga <Plug>(EasyAlign)
-    if !exists('g:easy_align_delimiters')
-    let g:easy_align_delimiters = {}
-    endif
-    let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
-    " Default:
-    " If a delimiter is in a highlight group whose name matches any of the followings, it will be ignored.
-    let g:easy_align_ignore_groups = ['Comment', 'String']
-" }}}
+" easyalign
+vmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+let g:easy_align_delimiters = {
+\ '>': { 'pattern': '>>\|=>\|>'  },
+\ '/': {
+\     'pattern':         '//\+\|/\*\|\*/',
+\     'delimiter_align': 'l',
+\     'ignore_groups':   ['!Comment'] },
+\ ']': {
+\     'pattern':       '[[\]]',
+\     'left_margin':   0,
+\     'right_margin':  0,
+\     'stick_to_left': 0
+\   },
+\ ')': {
+\     'pattern':       '[()]',
+\     'left_margin':   0,
+\     'right_margin':  0,
+\     'stick_to_left': 0
+\   },
+\ 'd': {
+\     'pattern':      ' \(\S\+\s*[;=]\)\@=',
+\     'left_margin':  0,
+\     'right_margin': 0
+\   }
+\ }
 
 
-" 键盘映射
 " Tab pages
 nnoremap <S-Left> :tabprevious<CR>
 nnoremap <S-Right> :tabnext<CR>
@@ -249,8 +284,8 @@ nnoremap <C-n> :tabnew<CR>
 nnoremap <C-x> :tabclose<CR>
 
 " 分屏窗口调整大小
-nmap    w=  :resize +3<CR>
-nmap    w-  :resize -3<CR>
+nmap    h=  :resize +3<CR>
+nmap    h-  :resize -3<CR>
 nmap    w,  :vertical resize -5<CR>
 nmap    w.  :vertical resize +5<CR>
 
