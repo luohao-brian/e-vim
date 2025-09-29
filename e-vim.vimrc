@@ -10,8 +10,8 @@ filetype on
 filetype plugin on
 filetype indent on
 set title
-set ruler                   " 打开状态栏标尺
-set cursorline              " 突出显示当前行
+"set ruler                   " 打开状态栏标尺
+"set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
